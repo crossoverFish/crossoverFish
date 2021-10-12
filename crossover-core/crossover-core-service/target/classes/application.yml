@@ -1,0 +1,15 @@
+﻿spring:
+  application:
+    name: crossover-core
+  profiles:
+    include: dao,dubbo,redis-base
+  devtools:
+    restart:
+      enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/tyu?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+
+
+
