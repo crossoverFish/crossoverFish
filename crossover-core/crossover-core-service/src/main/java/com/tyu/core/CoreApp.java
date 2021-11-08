@@ -15,7 +15,6 @@ import org.springframework.context.annotation.ImportResource;
 @SpringBootApplication
 @ImportResource({"classpath:/dubbo/*.xml"})
 @MapperScan("com.tyu.core.dao")
-@ComponentScan({"com.tyu"})
 public class CoreApp {
 
 	public static void main(String[] args) {

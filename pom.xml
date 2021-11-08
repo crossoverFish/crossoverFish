@@ -301,8 +301,12 @@
             <artifactId>brave-instrumentation-dubbo</artifactId>
         </dependency>
 
-
-
+        <!--亲缘性线程池-->
+        <dependency>
+            <groupId>com.github.phantomthief</groupId>
+            <artifactId>simple-pool</artifactId>
+            <version>0.1.17</version>
+        </dependency>
     </dependencies>
 
 

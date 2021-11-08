@@ -56,28 +56,6 @@ public ResponseEntity<String> signTest(@RequestParam Long id, @RequestParam Stri
 }
 ```
 
-## 运行项目 - 本地maven构建
-```
-## 打包
-mvn clean package
-## 运行项目
-java -jar target/restful-api-demo-0.0.1-SNAPSHOT.jar
-## 测试访问地址
-http://localhost:8081/swagger-ui.html
-```
-
-## 运行项目 - 本地docker环境中构建
-```
-## dockerfile-maven-plugin打包并构建镜像
-mvn clean package dockerfile:build
-## 或者打包后使用docker命令构建镜像
-mvn clean package
-docker build -t crossoverFish/restful-api-demo .
-## 启动容器
-docker run-p 8081:8081 -d --name restful-api-demo crossoverFish/restful-api-demo
-## 测试访问地址
-http://localhost:8081/swagger-ui.html
-```
 
 
 

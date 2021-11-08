@@ -13,7 +13,6 @@ import org.springframework.context.annotation.ImportResource;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ImportResource({"classpath:/dubbo/*.xml"})
-@ComponentScan({"com.tyu"})
 public class WebApp {
 
 
