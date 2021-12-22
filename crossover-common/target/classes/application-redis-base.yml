@@ -1,36 +1,7 @@
-redis:
-  pool:
-    maxTotal: 120 # 最大连接数
-    maxIdle: 30 # 最大空闲实例的个数
-    minIdle: 3 #最小空闲实例个数
-    numTestsPerEvictionRun: 1024 # 每个逐出器运行期间要检查的最大对象数
-    timeBetweenEvictionRunsMillis: 30000 # 释放扫描的扫描间隔
-    minEvictableIdleTimeMillis: 1800000 # 连接的最小空闲时间
-    softMinEvictableIdleTimeMillis: 10000 # 连接控歘按时间多久后释放，当空闲时间>该值且空闲连接>最大空闲连接数时直接释放
-    maxWaitMillis: 1500 # 获得链接时的最大等待毫秒数，小于0：阻塞不确定时间，默认-1
-    testOnBorrow: true # 在获得链接的时候检查有效性，默认false
-    testWhileIdle: true # 在空闲时检查有效性，默认false
-    blockWhenExhausted: false # 连接耗尽时是否阻塞，false报异常，true阻塞超时,默认true
-    timeOut: 10000 # jedis超时时间
-  maxRedirects: 5 # RedisClusterConfiguration配置
-  nodeCluters: 192.168.98.105:7000,192.168.98.105:7001,192.168.98.105:7002,192.168.98.105:7003,192.168.98.105:7004,192.168.98.105:7005
-  hostName: localhost
-  password: 123456
-  port: 6379
-  model: 1 #redis的模式1 表示单机，2 表示sentinel， 3表示cluster
-
----
 spring:
-  profiles: test
   redis:
-    cluster:
-      nodes:
-        - 10.125.128.189:32713
-        - 10.125.128.123:32514
-        - 10.125.128.98:32525
-        - 10.125.128.122:32539
-        - 10.125.128.124:32513
-        - 10.125.128.33:32516
+    host: localhost
+    port: 6379
     jedis:
       pool:
         max-active: 1000 #连接池最大连接数（使用负值表示没有限制）
@@ -38,33 +9,8 @@ spring:
         min-idle: 5 #连接池中的最小空闲连接
         max-wait: 1000  #连接池最大阻塞等待时间（使用负值表示没有限制）
     timeout: 20000
-    password: 123456#qaz
     database: 0
+    password: 123456
 
----
-spring:
-  profiles: prod
-  redis:
-    cluster:
-      nodes:
-        - 132.90.165.10:6397
-        - 132.90.165.11:6397
-        - 132.90.165.12:6397
-        - 132.90.165.13:6397
-        - 132.90.165.14:6397
-        - 132.90.165.11:6398
-        - 132.90.165.12:6398
-        - 132.90.165.13:6398
-        - 132.90.165.14:6398
-        - 132.90.165.10:6398
-    jedis:
-      pool:
-        max-active: 1000 #连接池最大连接数（使用负值表示没有限制）
-        max-idle: 100 #连接池中的最大空闲连接
-        min-idle: 5 #连接池中的最小空闲连接
-        max-wait: 1000  #连接池最大阻塞等待时间（使用负值表示没有限制）
-    timeout: 20000
-    password: B6.bounce312
-    database: 0
 
 

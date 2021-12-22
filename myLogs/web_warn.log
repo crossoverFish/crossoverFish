@@ -1,3 +1,0 @@
-2021-11-08 09:47:08.254 [main] WARN  org.apache.dubbo.config.AbstractConfig -  [DUBBO] There's no valid metadata config found, if you are using the simplified mode of registry url, please make sure you have a metadata address configured properly., dubbo version: 2.7.3, current host: 10.11.71.48
-2021-11-08 09:47:08.405 [main] WARN  org.apache.dubbo.common.config.ConfigurationUtils -  [DUBBO] You specified the config centre, but there's not even one single config item in it., dubbo version: 2.7.3, current host: 10.11.71.48
-2021-11-08 09:47:08.405 [main] WARN  org.apache.dubbo.common.config.ConfigurationUtils -  [DUBBO] You specified the config centre, but there's not even one single config item in it., dubbo version: 2.7.3, current host: 10.11.71.48

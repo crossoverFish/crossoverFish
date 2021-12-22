@@ -1,6 +1,7 @@
 package com.tyu.core.handler;
 
 
+import com.alibaba.fastjson.JSON;
 import com.tyu.constants.JobStatus;
 import com.tyu.core.bean.DelayJob;
 import com.tyu.core.bean.Job;
@@ -35,7 +36,7 @@ public class DelayHandler implements Runnable {
 
     @Override
     public void run() {
-        /*while (true) {
+        while (true) {
             try {
                 DelayJob item = DelayBucket.getFromBucket(this.delayBucketKey);
                 //没有任务
@@ -73,7 +74,7 @@ public class DelayHandler implements Runnable {
             }
 
 
-        }*/
+        }
     }
 
     private void sleep(){

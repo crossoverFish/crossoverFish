@@ -5,9 +5,7 @@ spring:
     name: restful-api-demo
   profiles:
     include: dao,dubbo,redis-base
-  devtools:
-    restart:
-      enabled: true
+
 
 
 #swagger 配置

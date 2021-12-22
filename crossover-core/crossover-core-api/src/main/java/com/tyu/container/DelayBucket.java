@@ -1,7 +1,7 @@
 package com.tyu.container;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tyu.common.util.RedisUtil;
+import com.tyu.common.util.RedisUtilExpired;
 import com.tyu.core.bean.DelayJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class DelayBucket {
      * @param delayJob
      */
     public static void addToBucket(String key, DelayJob delayJob) {
-        RedisUtil.ZSetOps.zAdd(key,JSONObject.toJSONString(delayJob), delayJob.getDelayTime());
+        RedisUtilExpired.ZSetOps.zAdd(key,JSONObject.toJSONString(delayJob), delayJob.getDelayTime());
     }
 
     /**
@@ -33,7 +33,7 @@ public class DelayBucket {
      * @return
      */
     public static DelayJob getFromBucket(String key) {
-        Set<ZSetOperations.TypedTuple<String>> typedTuples = RedisUtil.ZSetOps.zRangeWithScores(key,0,1);
+        Set<ZSetOperations.TypedTuple<String>> typedTuples = RedisUtilExpired.ZSetOps.zRangeWithScores(key,0,1);
         if (typedTuples.size() == 0) {
             return null;
         }
@@ -47,6 +47,6 @@ public class DelayBucket {
      * @param delayJob
      */
     public static void deleteFormBucket(String key, DelayJob delayJob) {
-        RedisUtil.ZSetOps.zRemove(key,JSONObject.toJSONString(delayJob));
+        RedisUtilExpired.ZSetOps.zRemove(key,JSONObject.toJSONString(delayJob));
     }
 }

@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/tyu?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+      username: root
+      password: root
+      validationQuery: select 1
+      maxActive: 30
+      minIdle: 4
+      initialSize: 4
+      testOnReturn: false
+      testWhileIdle: true
+      testOnBorrow: true
+      logAbandoned: false
+      timeBetweenEvictionRunsMillis: 600000
+      minEvictableIdleTimeMillis: 600000
+      poolPreparedStatements: true
+      max-open-prepared-statements: 20
+      removeAbandoned: true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      name: operation
+      connectionInitSqls: SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci
+
+
+

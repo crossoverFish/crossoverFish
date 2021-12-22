@@ -12,5 +12,30 @@ public class RedisKeyUtil
     }
 
 
+    /**
+     * 用户登录状态
+     *
+     * @param userId 用户Id
+     * @return key
+     */
+    public static String getUserIsLoginKey(String userId) {
+        return String.format("USER_LOGIN:%s", userId);
+    }
 
+
+    /**
+     * 分布式序列 workerIdKey
+     * @return
+     */
+    public static String getWorkerIdKey() {
+        return "WORKER_ID";
+    }
+
+    /**
+     * 分布式序列 hostWorkerIdKey
+     * @return
+     */
+    public static String getHostWorkerKey(String applicationName) {
+        return String.format("HOST_WORKER_ID:%s", applicationName);
+    }
 }

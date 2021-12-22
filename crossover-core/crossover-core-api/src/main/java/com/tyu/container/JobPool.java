@@ -1,7 +1,7 @@
 package com.tyu.container;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tyu.common.util.RedisUtil;
+import com.tyu.common.util.RedisUtilExpired;
 import com.tyu.core.bean.Job;
 
 import static com.tyu.common.util.RedisKeyUtil.DELAY_QUEUE_JOB_POOL;
@@ -20,7 +20,7 @@ public class JobPool {
      * @return
      */
     public static Job getDelayQueueJob(long delayQueueJobId) {
-        String delayQueueJob = (String) RedisUtil.HashOps.hGet(DELAY_QUEUE_JOB_POOL, delayQueueJobId + "");
+        String delayQueueJob = (String) RedisUtilExpired.HashOps.hGet(DELAY_QUEUE_JOB_POOL, delayQueueJobId + "");
         return JSONObject.parseObject(delayQueueJob, Job.class);
     }
 
@@ -29,7 +29,7 @@ public class JobPool {
      * @param job
      */
     public static void addDelayQueueJob(Job job) {
-        RedisUtil.HashOps.hPut(DELAY_QUEUE_JOB_POOL,String.valueOf(job.getId()), JSONObject.toJSONString(job));
+        RedisUtilExpired.HashOps.hPut(DELAY_QUEUE_JOB_POOL,String.valueOf(job.getId()), JSONObject.toJSONString(job));
     }
 
     /**
@@ -37,6 +37,6 @@ public class JobPool {
      * @param delayQueueJobId
      */
     public static void deleteDelayQueueJob(long delayQueueJobId) {
-        RedisUtil.HashOps.hDelete(DELAY_QUEUE_JOB_POOL,delayQueueJobId+"");
+        RedisUtilExpired.HashOps.hDelete(DELAY_QUEUE_JOB_POOL,delayQueueJobId+"");
     }
 }

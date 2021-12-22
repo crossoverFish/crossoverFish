@@ -4,12 +4,14 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tyu.common.anno.AccessToken;
+import com.tyu.common.anno.Sign;
 import com.tyu.common.enums.NotifyEnum;
 import com.tyu.common.exception.BusinessException;
 import com.tyu.common.exception.NotFoundException;
-import com.tyu.common.util.RedisUtil;
+import com.tyu.common.util.RedisUtilExpired;
 import com.tyu.core.model.Demo;
-import com.tyu.core.model.UserPrincipalVO;
+import com.tyu.core.model.UserInfo;
 import com.tyu.web.core.factory.NotifyServiceFactory;
 import com.tyu.web.service.INotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tyu.web.core.annotation.AccessToken;
-import com.tyu.web.core.annotation.UserPrincipal;
 
 
 import io.swagger.annotations.Api;
@@ -113,11 +113,17 @@ public class TestController {
 	@ApiOperation(value = "token测试")
 	@GetMapping("/token")
 	@AccessToken
-	public ResponseEntity<UserPrincipalVO> testToken(@ApiIgnore @UserPrincipal UserPrincipalVO user) {
+	public ResponseEntity<UserInfo> testToken(@ApiIgnore UserInfo user) {
 		return ResponseEntity.ok(user);
 	}
 
-
+	@ApiOperation(value = "sign测试")
+	@PostMapping("/sign")
+	@AccessToken
+	@Sign
+	public ResponseEntity<UserInfo> testSign(@RequestBody UserInfo user) {
+		return ResponseEntity.ok(user);
+	}
 
 	private void validateId(Long id) {
 		if (StringUtils.isEmpty(id)) {
@@ -146,6 +152,6 @@ public class TestController {
 	@ApiOperation(value = "异步通知", notes = "获取异步通知")
 	@GetMapping("/testRedis")
 	public ResponseEntity<String> testRedis(){
-		return ResponseEntity.ok(RedisUtil.StringOps.get("a"));
+		return ResponseEntity.ok(RedisUtilExpired.StringOps.get("a"));
 	}
 }

@@ -1,7 +1,7 @@
 package com.tyu.container;
 
 
-import com.tyu.common.util.RedisUtil;
+import com.tyu.common.util.RedisUtilExpired;
 
 /**
  * 存放可以消费的job list
@@ -15,7 +15,7 @@ public class ReadyQueue {
      * @param delayQueueJobId
      */
     public static void pushToReadyQueue(String topic,long delayQueueJobId) {
-        RedisUtil.ListOps.lLeftPush(topic,delayQueueJobId + "");
+        RedisUtilExpired.ListOps.lLeftPush(topic,delayQueueJobId + "");
     }
 
     /**
@@ -24,7 +24,7 @@ public class ReadyQueue {
      * @return
      */
     public static Long pollFormReadyQueue(String topic) {
-        String jobId = RedisUtil.ListOps.lRightPop(topic);
+        String jobId = RedisUtilExpired.ListOps.lRightPop(topic);
         return Long.valueOf(jobId);
     }
 
@@ -34,6 +34,6 @@ public class ReadyQueue {
      * @return
      */
     public static void removeFormReadyQueue(String topic,long delayQueueJobId) {
-        RedisUtil.ListOps.lRemove(topic,1,delayQueueJobId + "");
+        RedisUtilExpired.ListOps.lRemove(topic,1,delayQueueJobId + "");
     }
 }
