@@ -1,9 +1,6 @@
     /**
     * @Title: Response.java
-    * @Package com.ai.rai.interests.common.base
     * @Description: 数据接口统一返回实体类
-    * @author cbb
-    * @version V1.0
     */
     package com.tyu.common.model;
 

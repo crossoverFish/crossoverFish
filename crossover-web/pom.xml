@@ -27,7 +27,22 @@
             <groupId>com.tyu.crossover-core</groupId>
             <artifactId>crossover-core-api</artifactId>
             <version>0.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>asm</artifactId>
+                    <groupId>org.ow2.asm</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
+
+
     </dependencies>
 
 
