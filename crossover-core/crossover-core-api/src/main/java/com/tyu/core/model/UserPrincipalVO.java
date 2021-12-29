@@ -1,5 +1,6 @@
 package com.tyu.core.model;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import io.swagger.annotations.ApiModel;
@@ -39,4 +40,13 @@ public class UserPrincipalVO implements Serializable {
 	@ApiModelProperty(value = "是否记住我")
 	private String isRememberMe;
 
+
+	public static void main(String[] args) {
+		UserPrincipalVO userPrincipalVO = new UserPrincipalVO();
+		userPrincipalVO.setId(111111L);
+		userPrincipalVO.setUsername("撒大大");
+		userPrincipalVO.setPassword("abd!2123");
+		String s = JSONObject.toJSONString(userPrincipalVO);
+		System.out.println(s);
+	}
 }

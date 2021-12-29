@@ -18,7 +18,7 @@ public class RedisKeyUtil
      * @param userId 用户Id
      * @return key
      */
-    public static String getUserIsLoginKey(String userId) {
+    public static String getUserIsLoginKey(Long userId) {
         return String.format("USER_LOGIN:%s", userId);
     }
 

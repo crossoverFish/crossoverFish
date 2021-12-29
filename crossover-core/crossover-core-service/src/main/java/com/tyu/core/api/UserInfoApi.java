@@ -1,25 +1,20 @@
 package com.tyu.core.api;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tyu.api.IUserInfoApi;
 import com.tyu.common.constant.SignTokenConstant;
-import com.tyu.common.util.IdWorker;
-import com.tyu.common.util.JWTUtils;
-import com.tyu.common.util.SHA256Encoder;
-import com.tyu.common.util.SHA256HMACEncoder;
+import com.tyu.common.util.*;
+import com.tyu.core.model.UserPrincipalVO;
 import com.tyu.core.dao.UserInfoMapper;
 import com.tyu.common.constant.Constant;
 import com.tyu.common.exception.BusinessException;
 import com.tyu.common.exception.NotFoundException;
 import com.tyu.core.model.UserInfo;
 import com.tyu.core.model.UserInfoExample;
-import com.tyu.core.model.UserPrincipalVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.net.http.HttpResponse;
 import java.util.Date;
 import java.util.List;
 
@@ -65,8 +60,7 @@ public class UserInfoApi implements IUserInfoApi {
         // 根据用户信息创建token, 可以把用户其它信息填充进UserPrincipalVO中,提供了全参的构造方法
         BeanUtils.copyProperties(userInfo,userPrincipalVO);
 
-        String token = JWTUtils.createToken(userInfo.getId().toString(), SignTokenConstant.ACCESS);
-
+        String token = JWTUtils.createToken(userInfo.toString(), SignTokenConstant.ACCESS);
         return token;
     }
 }

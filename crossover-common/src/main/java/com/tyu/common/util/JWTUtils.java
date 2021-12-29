@@ -6,10 +6,14 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.tyu.common.constant.SignTokenConstant;
 import com.tyu.common.exception.BusinessException;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.constant.ErrorConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Random;
 
 
 @Component
@@ -24,19 +28,25 @@ public class JWTUtils {
 
     /**
      * 创建TOKEN
-     * @param sub
+     * @param userInfo
      * @return
      */
-    public static String createToken(String sub,String accessKey){
-        String secret = SignTokenConstant.PARTNERS.get(accessKey);
+    @SneakyThrows
+    public static String createToken(String userInfo,String accessKey){
+        String accessKeySecret = SignTokenConstant.PARTNERS.get(accessKey);
+        String encryptClaims = AesEncryptUtil.encrypt(userInfo, accessKeySecret, accessKeySecret);
         return SignTokenConstant.TOKEN_PREFIX + JWT.create()
-                .withSubject(sub)
+                .withSubject(encryptClaims)
                 .withExpiresAt(new Date(System.currentTimeMillis() + expireTime))
-                .sign(Algorithm.HMAC512(secret));
+                .sign(Algorithm.HMAC512(accessKeySecret));
     }
 
     public static void main(String[] args) {
-        System.out.println(DateUtil.getDateTime((new Date(System.currentTimeMillis() + expireTime))));
+        String userInfo = "{\"id\":111111,\"password\":\"abd!2123\",\"username\":\"撒大大\"}";
+        String accessKeyId = SignTokenConstant.ACCESS;
+        String token = createToken(userInfo, accessKeyId);
+        String decryptUserInfo = validateToken(token, accessKeyId);
+        System.out.println(decryptUserInfo);
     }
 
 
@@ -46,11 +56,14 @@ public class JWTUtils {
      */
     public static String validateToken(String token,String accessKey){
         try {
-            String secret = SignTokenConstant.PARTNERS.get(accessKey);
-            return JWT.require(Algorithm.HMAC512(secret))
+            String accessKeySecret = SignTokenConstant.PARTNERS.get(accessKey);
+            String encryptedStr = JWT.require(Algorithm.HMAC512(accessKeySecret))
                     .build()
                     .verify(token.replace(SignTokenConstant.TOKEN_PREFIX, ""))
                     .getSubject();
+            String accessKeyId = SignTokenConstant.ACCESS;
+            String decryptedStr = AesEncryptUtil.decrypt(encryptedStr, accessKeySecret, accessKeySecret);
+            return decryptedStr;
         } catch (TokenExpiredException e){
             throw new BusinessException("token已经过期");
         } catch (Exception e){
@@ -80,6 +93,9 @@ public class JWTUtils {
         //如果剩余过期时间少于过期时常的一般时 需要更新
         return (expiresAt.getTime()-System.currentTimeMillis()) < (expireTime>>1);
     }
+
+
+
 }
 
 

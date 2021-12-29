@@ -8,6 +8,7 @@ import com.tyu.common.anno.AccessToken;
 import com.tyu.common.anno.Sign;
 import com.tyu.common.constant.SignTokenConstant;
 import com.tyu.common.util.*;
+import com.tyu.core.model.UserPrincipalVO;
 import org.apache.catalina.connector.OutputBuffer;
 import org.apache.catalina.connector.ResponseFacade;
 import org.apache.commons.lang3.StringUtils;
@@ -95,16 +96,13 @@ public class RequestInterceptor implements HandlerInterceptor {
     private boolean tokenAuthentication(HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader(SignTokenConstant.USER_LOGIN_TOKEN);
         //验证token
-        String sub = JWTUtils.validateToken(token,SignTokenConstant.ACCESS);
-        if (StringUtils.isBlank(sub)) {
+        String userInfo = JWTUtils.validateToken(token,SignTokenConstant.ACCESS);
+        if (StringUtils.isBlank(userInfo)) {
+            logger.warn("token校验结果为空!");
             return false;
         }
-        if (JWTUtils.isNeedUpdate(token,SignTokenConstant.ACCESS)) {
-            String newToken = JWTUtils.createToken(sub,SignTokenConstant.ACCESS);
-            response.setHeader(SignTokenConstant.USER_LOGIN_TOKEN, newToken);
-            String userIsLoginKey = RedisKeyUtil.getUserIsLoginKey(sub);
-            RedisUtil.StringOps.set(userIsLoginKey,token,30, TimeUnit.MINUTES);
-        }
+        UserPrincipalVO userPrincipalVO = JSONObject.parseObject(userInfo, UserPrincipalVO.class);
+        request.setAttribute("userInfo", userPrincipalVO);
         return true;
     }
 
