@@ -4,7 +4,9 @@ import com.tyu.core.listener.ApplicationStartup;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.io.IOException;
 
@@ -16,6 +18,8 @@ import java.io.IOException;
 @SpringBootApplication
 @ImportResource({"classpath:/dubbo/*.xml"})
 @MapperScan("com.tyu.*.dao")
+@EnableTransactionManagement
+@EnableAspectJAutoProxy(exposeProxy = true)
 public class CoreApp {
 
 	public static void main(String[] args) throws IOException{

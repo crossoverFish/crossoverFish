@@ -10,19 +10,27 @@ import com.tyu.common.exception.BusinessException;
 import com.tyu.common.exception.NotFoundException;
 import com.tyu.core.model.UserInfo;
 import com.tyu.core.model.UserInfoExample;
+import org.apache.poi.ss.formula.functions.T;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
+
+import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
 @Service("userInfoApi")
 public class UserInfoApi implements IUserInfoApi {
 
+
     @Autowired
     private UserInfoMapper userMapper;
+
 
     public int registerUser(UserPrincipalVO userPrincipalVO) {
         UserInfo userInfo = new UserInfo();
@@ -62,5 +70,37 @@ public class UserInfoApi implements IUserInfoApi {
 
         String token = JWTUtils.createToken(userInfo.toString(), SignTokenConstant.ACCESS);
         return token;
+    }
+
+    public void init(){
+        userMapper.deleteByPrimaryKey(1L);
+        UserInfo userInfo = UserInfo.builder().id(1L).username("zxf").password("1").activeStatus("1").createTime(new Date()).build();
+        userMapper.insert(userInfo);
+      return;
+    }
+
+    @Override
+    public void testTransaction() {
+        init();
+        UserInfoApi userInfoApi = (UserInfoApi) AopContext.currentProxy();
+        userInfoApi.sql1();
+    }
+
+
+    //1.捕获不到异常都会执行,反之都不会执行
+    @Transactional(rollbackFor = Exception.class)
+    public void sql1() {
+        UserInfo userInfo = UserInfo.builder().id(1L).password("tyu").build();
+        userMapper.updateByPrimaryKeySelective(userInfo);
+        IUserInfoApi userInfoApi = (UserInfoApi) AopContext.currentProxy();
+        userInfoApi.sq2();
+        System.out.println(1/0);
+
+    }
+    @Transactional(rollbackFor = Exception.class,propagation = REQUIRES_NEW)
+    @Override
+    public void sq2() {
+            UserInfo userInfo = UserInfo.builder().id(1L).username("xxx").build();
+            userMapper.updateByPrimaryKeySelective(userInfo);
     }
 }

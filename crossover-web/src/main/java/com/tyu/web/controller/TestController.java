@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tyu.api.IUserInfoApi;
 import com.tyu.common.anno.AccessToken;
 import com.tyu.common.anno.Sign;
 import com.tyu.common.enums.NotifyEnum;
@@ -101,6 +102,8 @@ public class TestController {
 		throw new NotFoundException();
 	}
 
+
+
 	@ApiOperation(value = "获取Demo列表", notes = "列表资源有数据响应200,无数据则响应204")
 	@GetMapping
 	public ResponseEntity<List<Demo>> getList() {
@@ -153,5 +156,13 @@ public class TestController {
 	@GetMapping("/testRedis")
 	public ResponseEntity<String> testRedis(){
 		return ResponseEntity.ok(RedisUtilExpired.StringOps.get("a"));
+	}
+
+	@Autowired
+	private IUserInfoApi userInfoApi;
+
+	@GetMapping("/testTransaction")
+	public void testTransaction(){
+		userInfoApi.testTransaction();
 	}
 }

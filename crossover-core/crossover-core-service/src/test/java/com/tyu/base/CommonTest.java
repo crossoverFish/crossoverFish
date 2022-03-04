@@ -1,9 +1,11 @@
 package com.tyu.base;
 
+import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSONObject;
 import com.github.phantomthief.pool.KeyAffinityExecutor;
-import com.tyu.entity.Person;
-import com.tyu.service.IDrink;
+import com.google.common.collect.Lists;
+import com.tyu.convert.CarConvert;
+import com.tyu.entity.*;
 import com.tyu.service.IEat;
 import com.tyu.service.impl.UserExtend;
 import com.tyu.service.impl.UserService;
@@ -18,6 +20,7 @@ import org.springframework.cglib.proxy.MethodProxy;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
@@ -126,5 +129,66 @@ public class CommonTest {
             }
         });
         aaaaaaaaa.eat("apple");
+    }
+
+
+
+    @Test
+    public void mapConstructTest () {
+        //批量转换（List<CarDTO>---->List<CarVO>）
+        List<CarDTO> carDTOList = Lists.newArrayList(); //source 假设这里已经有数据了
+        List<CarVO> carVOList = Lists.newArrayList(); // target
+        // 以前是用for循环遍历转换
+        carDTOList.forEach(carDTO -> {
+            CarVO carVO = CarConvert.INSTANCE.toCarVO(carDTO);
+            carVOList.add(carVO);
+        });
+        // mapstruce 专门给我们提供了一个方法，用于转换list的
+        List<CarVO> carVOListNew = CarConvert.INSTANCE.toCarVOList(carDTOList);
+
+        // @InheritConfiguration 继承配置
+        CarDTO carDTO = new CarDTO();
+        //carDTO.setXXX
+        //car.set...
+        BaoMaVO baoMaVO = CarConvert.INSTANCE.toBaoMaVO2(carDTO);
+        System.out.println(baoMaVO); // baoMaVO 没有修改以前的值
+        // 希望通过 carDTO2 中的属性值，来更新 baoMaVO 中的属性值
+        CarDTO carDTO2 = new CarDTO();
+        //carDTO2.setXXX
+        CarConvert.INSTANCE.updateBaoMaVo(carDTO, baoMaVO); // 进行应该
+        System.out.println(baoMaVO); // baoMaVO 修改以后的值
+    }
+
+    @Test
+    public void testAssert(){
+        Person build = null;
+        int id =1111;
+        Assert.notNull(build,"流程实例拓展({}) 不存在",id);
+        return;
+    }
+
+    @Test
+    public void testList(){
+        CarDTO carDTO = new CarDTO();
+        List<PartDTO> list = new ArrayList();
+        carDTO.setPartDTOList(list);
+        PartDTO partDTO = new PartDTO();
+        partDTO.setAttributeName("aaa");
+        list.add(partDTO);
+        System.out.println(carDTO);
+
+      return;
+    }
+
+
+    @Test
+    public void A(){
+       String s = "1";
+      return;
+    }
+
+    public void B(StringBuilder sb){
+        sb.append("1111");
+      return;
     }
 }

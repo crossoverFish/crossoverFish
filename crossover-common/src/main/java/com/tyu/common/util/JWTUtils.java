@@ -45,6 +45,7 @@ public class JWTUtils {
         String userInfo = "{\"id\":111111,\"password\":\"abd!2123\",\"username\":\"撒大大\"}";
         String accessKeyId = SignTokenConstant.ACCESS;
         String token = createToken(userInfo, accessKeyId);
+        System.out.println(token);
         String decryptUserInfo = validateToken(token, accessKeyId);
         System.out.println(decryptUserInfo);
     }
@@ -61,7 +62,6 @@ public class JWTUtils {
                     .build()
                     .verify(token.replace(SignTokenConstant.TOKEN_PREFIX, ""))
                     .getSubject();
-            String accessKeyId = SignTokenConstant.ACCESS;
             String decryptedStr = AesEncryptUtil.decrypt(encryptedStr, accessKeySecret, accessKeySecret);
             return decryptedStr;
         } catch (TokenExpiredException e){

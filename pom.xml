@@ -89,6 +89,12 @@
         <jedis.version>2.9.3</jedis.version>
 
         <woego-frame-boot.version>1.0.1-SNAPSHOT</woego-frame-boot.version>
+
+
+        <!--工具类-->
+        <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <hutool.version>5.6.1</hutool.version>
+
     </properties>
 
     <dependencyManagement>
@@ -548,6 +554,29 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>3.0.5</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId> <!-- use mapstruct-jdk8 for Java 8 or higher -->
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-jdk8</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

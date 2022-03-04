@@ -41,7 +41,6 @@ public class RequestSignUtils {
 
         // 2. FORM表单格式参数签名
         String sign = sign(accessKeyId, accessKeySecret, data);
-        logger.info("sign ==> {}", sign);
 
 
 
