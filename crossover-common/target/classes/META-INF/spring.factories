@@ -1,5 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.tyu.common.config.RedisConfig,\
-  com.tyu.common.util.RedisUtilExpired,\
-  com.tyu.common.util.SpringContextHolderUtil
-
