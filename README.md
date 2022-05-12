@@ -14,10 +14,10 @@
 ## 全局异常处理
 采用@RestControllerAdvice + @ExceptionHandler的方式对全局异常进行处理，同时加入了常见的一些自定义异常类。
 
-## 参数验证器 23
+## 参数验证器 
 采用spring提供的@Validated注解结合hibernate的validator进行验证，你只需要在你的验证实体对象中使用验证注解，如@NotNull、@NotBlank等，同时在你的controller方法中加入@Validated注解即可，验证结果信息已经由全局异常处理器帮你做好了。
 
-## TOKEN验证 24
+## TOKEN验证 25
 当我们的API需要登录后才能访问时，简单做法是登录验证成功后给客户端生成一个token，客户端后续的请求都需要带上这个token参数，服务端对这个token进行验证，验证通过即可访问API。本项目中也集成了token的生成，同时通过拦截器统一验证了token的有效性，这依赖于redis来存储token，但这也是比较流行的做法。
 你只需要在controller中需要的地方加入@AccessToken注解即可，同时如果你需要当前登录的用户信息，只需要在方法参数中加入@UserPrincipal注解修饰参数UserPrincipalVO即可。
 代码示例：
