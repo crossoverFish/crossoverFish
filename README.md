@@ -22,7 +22,7 @@
 你只需要在controller中需要的地方加入@AccessToken注解即可，同时如果你需要当前登录的用户信息，只需要在方法参数中加入@UserPrincipal注解修饰参数UserPrincipalVO即可。
 代码示例：
 ```
-// 在登录业务类中注入用户TOKEN组件
+// 在登录业务类中注入用户TOKEN组件 test 
 @Autowired
 private UserTokenComponent userTokenComponent;
 
