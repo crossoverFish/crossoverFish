@@ -20,6 +20,7 @@
 
 
     <properties>
+        <!--1-->
         <!-- 默认覆盖原来jar包,打包部署时可以更改这个路径拷贝到本地 -->
         <output.jar.directory>C:\Users\P52\Desktop\jar包\2b2c\</output.jar.directory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
