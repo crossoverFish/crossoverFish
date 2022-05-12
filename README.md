@@ -14,7 +14,7 @@
 ## 全局异常处理
 采用@RestControllerAdvice + @ExceptionHandler的方式对全局异常进行处理，同时加入了常见的一些自定义异常类。
 
-## 参数验证器 16
+## 参数验证器 17
 采用spring提供的@Validated注解结合hibernate的validator进行验证，你只需要在你的验证实体对象中使用验证注解，如@NotNull、@NotBlank等，同时在你的controller方法中加入@Validated注解即可，验证结果信息已经由全局异常处理器帮你做好了。
 
 ## TOKEN验证
