@@ -17,7 +17,7 @@ public class Md5 {
 	}
 
 	/**
-	 * MD5加密
+	 * MD5加密 111
 	 * 
 	 * @param str
 	 * @return
