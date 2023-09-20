@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -841,6 +845,19 @@ public abstract class DateUtil extends org.apache.commons.lang3.time.DateUtils
         return list;
     }
 
+    /**
+     * 获取位移天数的0点
+     * @param offsetDays
+     * @return
+     */
+    public static String getOffsetDaysStart(int offsetDays) {
+        //  0 点时间
+        LocalDate today = LocalDate.now();
+        LocalDate twoDaysAgo = today.plusDays(offsetDays);
+        LocalDateTime dateTime = LocalDateTime.of(twoDaysAgo, LocalTime.MIDNIGHT);
+        // 将时间格式化为字符串并输出
+        return dateTime.format(DateTimeFormatter.ofPattern(DateUtil.SECOND_FORMAT));
+    }
 
 
 
